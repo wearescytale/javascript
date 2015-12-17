@@ -766,12 +766,12 @@ Based on the awesome [Airbnb Style Guide](https://github.com/airbnb/javascript/t
 
 ## Whitespace
 
-  - Use soft tabs set to 2 spaces.
+  - Use soft tabs set to 4 spaces.
 
     ```javascript
     // bad
     function() {
-    ∙∙∙∙var name;
+    ∙∙var name;
     }
 
     // bad
@@ -781,7 +781,7 @@ Based on the awesome [Airbnb Style Guide](https://github.com/airbnb/javascript/t
 
     // good
     function() {
-    ∙∙var name;
+    ∙∙∙∙var name;
     }
     ```
 
