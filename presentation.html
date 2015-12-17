@@ -4,29 +4,66 @@
     <title>Title</title>
     <meta charset="utf-8">
     <style>
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:200italic,400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600italic,600);
 
-      body { font-family: 'Open Sans', sans-serif; }
-      h1, h2, h3 {
-        /*font-family: 'Yanone Kaffeesatz';*/
-        font-family: 'Open Sans', sans-serif;
-        font-weight: normal;
+      html {
+          -webkit-font-smoothing: antialiased;
+      }
+      body, h1, h2, h3 {
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 300;
+      }
+      .remark-container {
+          background: #263238;
+      }
+      .remark-slide-scaler {
+          box-shadow: none;
+      }
+      h1 {
+          color: #ECEFF1;
+      }
+      h2 {
+          color: #B0BEC5;
+          font-weight: 400;
+      }
+      h3 {
+          color: #9E9E9E;
+      }
+      a {
+          color: #2196F3;
+          text-decoration: none;
+      }
+      .colored {
+          background: #607D8B;
+      }
+      .colored h2 {
+          font-weight: 300;
+      }
+      strong {
+          color: #607D8B;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .remark-inline-code {
+          background: #ECEFF1;
+          color: #37474F;
+          font-style: italic;
+          padding: 0 5px;
+      }
     </style>
   </head>
   <body>
     <textarea id="source">
 
-class: center, middle
+class: center, middle, colored
 
-## Scytale
-# js Guidelines
+## Scytale's
+# Javascript Guidelines
 
 ---
 
-## Types
+### Types
 
   - **Primitives**: When you access a primitive type you work directly on its value.
 
@@ -47,6 +84,8 @@ class: center, middle
 
 ---
 
+### Types
+
   - **Complex**: When you access a complex type you work on a reference to its value.
 
     + `object`
@@ -64,7 +103,7 @@ class: center, middle
 
 ---
 
-## Objects
+### Objects
 
   - Use the literal syntax for object creation.
 
@@ -78,7 +117,9 @@ class: center, middle
 
 ---
 
-  - Don't use [reserved words](http://es5.github.io/#x7.6.1) as keys. It won't work in IE8. [More info](https://github.com/airbnb/javascript/issues/61).
+### Objects
+
+  - Don't use reserved words as keys. It won't work in IE8.
 
     ```javascript
     // bad
@@ -93,6 +134,10 @@ class: center, middle
       hidden: true
     };
     ```
+
+---
+
+### Objects
 
   - Use readable synonyms in place of reserved words.
 
@@ -115,7 +160,7 @@ class: center, middle
 
 ---
 
-## Arrays
+### Arrays
 
   - Use the literal syntax for array creation.
 
@@ -141,6 +186,8 @@ class: center, middle
 
 ---
 
+### Arrays
+
   - When you need to copy an array use Array#slice
 
     ```javascript
@@ -159,7 +206,7 @@ class: center, middle
 
 ---
 
-## Strings
+### Strings
 
   - Use single quotes `''` for strings.
 
@@ -178,6 +225,8 @@ class: center, middle
     ```
 
 ---
+
+### Strings
 
   - Strings longer than 100 characters should be written across multiple lines using string concatenation.
 
@@ -201,76 +250,68 @@ class: center, middle
 
 ---
 
+### Strings
+
   - When programmatically building up a string, use Array#join instead of string concatenation (Mostly for IE)
 
     ```javascript
     // bad
     function inbox(messages) {
-      items = '<ul>';
+        items = '<ul>';
 
-      for (i = 0; i < length; i++) {
-        items += '<li>' + messages[i].message + '</li>';
-      }
+        for (i = 0; i < length; i++) {
+            items += '<li>' + messages[i].message + '</li>';
+        }
 
-      return items + '</ul>';
+        return items + '</ul>';
     }
 
     // good
     function inbox(messages) {
-      items = [];
+        items = [];
 
-      for (i = 0; i < length; i++) {
-        // use direct assignment in this case because we're micro-optimizing.
-        items[i] = '<li>' + messages[i].message + '</li>';
-      }
+        for (i = 0; i < length; i++) {
+            // use direct assignment in this case because we're micro-optimizing.
+            items[i] = '<li>' + messages[i].message + '</li>';
+        }
 
-      return '<ul>' + items.join('') + '</ul>';
+        return '<ul>' + items.join('') + '</ul>';
     }
     ```
 
 ---
 
-## Functions
+### Functions
 
   - Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears.
 
-    ```javascript
-    // named function expression
-    var named = function named() {
-      return true;
-    };
-    ```
-
----
-
-  - **Note:** ECMA-262 defines a `block` as a list of statements. A function declaration is not a statement.
-
-    ```javascript
-    // bad
-    if (currentUser) {
+  ```javascript
+  // bad
+  if (currentUser) {
       function test() {
-        console.log('Nope.');
+          console.log('Nope.');
       }
-    }
+  }
 
-    // good
-    var test;
-    if (currentUser) {
+  // good
+  var test;
+  if (currentUser) {
       test = function test() {
-        console.log('Yup.');
+          console.log('Yup.');
       };
-    }
-    ```
+  }
+  ```
+
 ---
 
-## Properties
+### Properties
 
   - Use dot notation when accessing properties.
 
     ```javascript
     var luke = {
-      jedi: true,
-      age: 28
+        jedi: true,
+        age: 28
     };
 
     // bad
@@ -281,7 +322,7 @@ class: center, middle
     ```
 ---
 
-## Variables
+### Variables
 
   - Always use `var` to declare variables. Not doing so will result in global variables. We want to avoid polluting the global namespace. Captain Planet warned us of that.
 
@@ -293,6 +334,8 @@ class: center, middle
     var superPower = new SuperPower();
     ```
 ---
+
+### Variables
 
   - Use one `var` declaration per variable.
     It's easier to add new variable declarations this way, and you never have
@@ -319,7 +362,7 @@ class: center, middle
 
 ---
 
-## Comparison Operators & Equality
+### Comparison Operators & Equality
 
   - Use `===` and `!==` over `==` and `!=`.
   - Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
@@ -333,21 +376,21 @@ class: center, middle
 
 ---
 
-## Blocks
+### Blocks
 
   - Use braces with all multi-line blocks.
 
     ```javascript
     // bad
     if (test)
-      return false;
+        return false;
 
     // good
     if (test) return false;
 
     // good
     if (test) {
-      return false;
+        return false;
     }
 
     // bad
@@ -355,11 +398,13 @@ class: center, middle
 
     // good
     function() {
-      return false;
+        return false;
     }
     ```
 
 ---
+
+### Blocks
 
   - If you're using multi-line blocks with `if` and `else`, put `else` on the same line as your
     `if` block's closing brace.
@@ -367,35 +412,35 @@ class: center, middle
     ```javascript
     // bad
     if (test) {
-      thing1();
-      thing2();
+        thing1();
+        thing2();
     }
     else {
-      thing3();
+        thing3();
     }
 
     // good
     if (test) {
-      thing1();
-      thing2();
+        thing1();
+        thing2();
     } else {
-      thing3();
+        thing3();
     }
     ```
 
 ---
 
-## Comments
+### Comments
 
   - Use `// FIXME:` to annotate problems.
 
     ```javascript
     function Calculator() {
 
-      // FIXME: shouldn't use a global here
-      total = 0;
+        // FIXME: shouldn't use a global here
+        total = 0;
 
-      return this;
+        return this;
     }
     ```
 
@@ -404,15 +449,15 @@ class: center, middle
     ```javascript
     function Calculator() {
 
-      // TODO: total should be configurable by an options param
-      this.total = 0;
+        // TODO: total should be configurable by an options param
+        this.total = 0;
 
-      return this;
+        return this;
     }
     ```
 ---
 
-## Whitespace
+### Whitespace
 
   - Use soft tabs set to 4 spaces.
   - Place 1 space before the leading brace.
@@ -428,6 +473,8 @@ class: center, middle
     ```
 ---
 
+### Whitespace
+
   - Use indentation when making long method chains. Use a leading dot, which
     emphasizes that the line is a method call, not a new statement.
 
@@ -437,44 +484,44 @@ class: center, middle
 
     // bad
     $('#items').
-      find('.selected').
-        highlight().
-        end().
-      find('.open').
-        updateCount();
+        find('.selected').
+            highlight().
+            end().
+        find('.open').
+            updateCount();
 
     // good
     $('#items')
-      .find('.selected')
-        .highlight()
-        .end()
-      .find('.open')
-        .updateCount();
+        .find('.selected')
+            .highlight()
+            .end()
+        .find('.open')
+            .updateCount();
     ```
 
 ---
 
-## Semicolons
+### Semicolons
 
   - **Yup.**
 
     ```javascript
     // bad
     (function() {
-      var name = 'Skywalker'
-      return name
+        var name = 'Skywalker'
+        return name
     })()
 
     // good
     (function() {
-      var name = 'Skywalker';
-      return name;
+        var name = 'Skywalker';
+        return name;
     })();
     ```
 
 ---
 
-## Type Casting & Coercion
+### Type Casting & Coercion
 
   - Perform type coercion at the beginning of the statement.
   - Strings:
@@ -496,6 +543,8 @@ class: center, middle
     ```
 
 ---
+
+### Type Casting & Coercion
 
   - Use `parseInt` for Numbers and always with a radix for type casting.
 
@@ -522,7 +571,7 @@ class: center, middle
     ```
 ---
 
-## Naming Conventions
+### Naming Conventions
 
   - Use camelCase when naming objects, functions, and instances.
 
@@ -540,29 +589,33 @@ class: center, middle
 
 ---
 
+### Naming Conventions
+
   - Use PascalCase when naming constructors or classes.
 
     ```javascript
     // bad
     function user(options) {
-      this.name = options.name;
+        this.name = options.name;
     }
 
     var bad = new user({
-      name: 'nope'
+        name: 'nope'
     });
 
     // good
     function User(options) {
-      this.name = options.name;
+        this.name = options.name;
     }
 
     var good = new User({
-      name: 'yup'
+        name: 'yup'
     });
     ```
 
 ---
+
+### Naming Conventions
 
   - Use a leading underscore `_` when naming private properties.
 
@@ -576,53 +629,57 @@ class: center, middle
     ```
 ---
 
+### Naming Conventions
+
   - When saving a reference to `this` use `_this`.
 
     ```javascript
     // bad
     function() {
-      var self = this;
-      return function() {
-        console.log(self);
-      };
+        var self = this;
+        return function() {
+            console.log(self);
+        };
     }
 
     // bad
     function() {
-      var that = this;
-      return function() {
-        console.log(that);
-      };
+        var that = this;
+        return function() {
+            console.log(that);
+        };
     }
 
     // good
     function() {
-      var _this = this;
-      return function() {
-        console.log(_this);
-      };
+        var _this = this;
+        return function() {
+            console.log(_this);
+        };
     }
     ```
 
 ---
+
+### Naming Conventions
 
   - Name your functions. This is helpful for stack traces.
 
     ```javascript
     // bad
     var log = function(msg) {
-      console.log(msg);
+        console.log(msg);
     };
 
     // good
     var log = function log(msg) {
-      console.log(msg);
+        console.log(msg);
     };
     ```
 
 ---
 
-## jQuery
+### jQuery
 
   - Prefix jQuery object variables with a `$`.
 
@@ -636,34 +693,38 @@ class: center, middle
 
 ---
 
+### jQuery
+
   - Cache jQuery lookups.
 
     ```javascript
     // bad
     function setSidebar() {
-      $('.sidebar').hide();
+        $('.sidebar').hide();
 
-      // ...stuff...
+        // ...stuff...
 
-      $('.sidebar').css({
-        'background-color': 'pink'
-      });
+        $('.sidebar').css({
+            'background-color': 'pink'
+        });
     }
 
     // good
     function setSidebar() {
-      var $sidebar = $('.sidebar');
-      $sidebar.hide();
+        var $sidebar = $('.sidebar');
+        $sidebar.hide();
 
-      // ...stuff...
+        // ...stuff...
 
-      $sidebar.css({
-        'background-color': 'pink'
-      });
+        $sidebar.css({
+            'background-color': 'pink'
+        });
     }
     ```
 
 ---
+
+### jQuery
 
   - For DOM queries use Cascading `$('.sidebar ul')` or parent > child `$('.sidebar > ul')`
   - Use `find` with scoped jQuery object queries.
@@ -694,7 +755,9 @@ class: center, middle
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>
     <script>
-      var slideshow = remark.create();
+      var slideshow = remark.create({
+          highlightStyle: 'zenburn'
+      });
     </script>
   </body>
 </html>
